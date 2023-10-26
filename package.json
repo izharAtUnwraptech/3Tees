@@ -9,13 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.88.5",
+    "@react-three/fiber": "^8.15.5",
+    "bcrypt": "^5.1.1",
+    "framer-motion": "^10.16.4",
+    "maath": "^0.10.4",
+    "mongodb": "^6.2.0",
+    "mongoose": "^7.6.3",
+    "next": "13.5.6",
+    "next-auth": "^4.24.3",
     "react": "^18",
+    "react-color": "^2.19.3",
     "react-dom": "^18",
-    "next": "13.5.6"
+    "tailwindcss": "^3.3.4",
+    "three": "^0.157.0",
+    "valtio": "^1.11.3"
   },
   "devDependencies": {
     "autoprefixer": "^10",
-    "postcss": "^8",
-    "tailwindcss": "^3"
+    "postcss": "^8"
   }
 }
