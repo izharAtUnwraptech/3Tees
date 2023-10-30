@@ -116,6 +116,8 @@ const Create = () => {
         })
     }
 
+    const gender = snap.isMale ? "Female" : "Male";
+
 
   return (
     <AnimatePresence>
@@ -210,6 +212,30 @@ const Create = () => {
               }
               }
             />
+
+          </motion.div>
+
+          {/* Gender button */}
+          <motion.div 
+          className="absolute z-10 top-5 right-48"
+          {...fadeAnimation}
+          >
+            {snap.isMale ? 
+            <CustomButton 
+              type="filled"
+              title={gender}
+              handleClick={ () => {
+                state.isMale = false;
+              }}
+            />
+          : <CustomButton 
+              type="filled"
+              title={gender}
+              handleClick={ () => {
+                state.isMale = true;
+              }}
+            />  
+          }
 
           </motion.div>
 

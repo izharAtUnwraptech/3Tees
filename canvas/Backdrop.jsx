@@ -23,7 +23,7 @@ const Backdrop = () => {
     frames={60}
     alphaTest={0.4}
     scale={10}
-    // resolution={2028} 
+    resolution={2028} 
     rotation={[Math.PI / 2, 0, 0]}
     position={[0, 0, -0.2]}
     >

@@ -18,6 +18,17 @@ const LogoTab = () => {
         state.logoDecalPos[0] = sliderXValue;
     };
 
+    const handleXIncrement = (step) => {
+        setSliderXValue(sliderXValue+step);
+        state.logoDecalPos[0] = sliderXValue;
+
+    }
+
+    const handleXDecrement = (step) => {
+        setSliderXValue(sliderXValue-step);
+        state.logoDecalPos[0] = sliderXValue;
+    }
+
 
     // Position Y slider
     const [sliderYValue, setSliderYValue] = useState(snap.logoDecalPos[1]);
@@ -27,6 +38,17 @@ const LogoTab = () => {
         state.logoDecalPos[1] = sliderYValue;
     };
 
+    const handleYIncrement = (step) => {
+        setSliderYValue(sliderYValue+step);
+        state.logoDecalPos[1] = sliderYValue;
+
+    }
+
+    const handleYDecrement = (step) => {
+        setSliderYValue(sliderYValue-step);
+        state.logoDecalPos[1] = sliderYValue;
+    }
+
     // Position Z slider
     const [sliderZValue, setSliderZValue] = useState(snap.logoDecalPos[2]);
 
@@ -34,6 +56,16 @@ const LogoTab = () => {
         setSliderZValue(parseFloat(e.target.value));
         state.logoDecalPos[2] = sliderZValue;
     };
+
+    const handleZIncrement = (step) => {
+        setSliderZValue(sliderZValue+step);
+        state.logoDecalPos[2] = sliderZValue;
+    }
+
+    const handleZDecrement = (step) => {
+        setSliderZValue(sliderZValue-step);
+        state.logoDecalPos[2] = sliderZValue;
+    }
 
     // Scale
     const [sliderScale, setSliderScale] = useState(snap.logoScale);
@@ -43,6 +75,16 @@ const LogoTab = () => {
         state.logoScale = sliderScale;
     };
 
+    const handleScaleIncrement = (step) => {
+        setSliderScale(sliderScale+step);
+        state.logoScale = sliderScale;
+    }
+
+    const handleScaleDecrement = (step) => {
+        setSliderScale(sliderScale-step);
+        state.logoScale = sliderScale;
+    }
+
     // Rotate
     const [sliderRotate, setSliderRotate] = useState(0);
 
@@ -50,6 +92,16 @@ const LogoTab = () => {
         setSliderRotate(parseFloat(e.target.value));
         state.logoRotate[2] = sliderRotate;
     };
+
+    const handleRotateIncrement = (step) => {
+        setSliderRotate(sliderRotate+step);
+        state.logoRotate[2] = sliderRotate;
+    }
+
+    const handleRotateDecrement = (step) => {
+        setSliderRotate(sliderRotate-step);
+        state.logoRotate[2] = sliderRotate;
+    }
 
     // setDefault
     const setDefaultVals = () => {
@@ -63,9 +115,6 @@ const LogoTab = () => {
         state.logoRotate[2] = 0;
     }
 
-
-
-
   return (
     <div className="rightlogo-container flex flex-col order-first">
         <div className="flex-1 glassmorphism p-1 rounded-md">
@@ -75,6 +124,10 @@ const LogoTab = () => {
             <label htmlFor="sliderX">
                 X:
             </label>
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
+                onClick={() => {handleXDecrement(0.01)}}
+            >-</button>
             <input
                 type="range"
                 className="slider"
@@ -83,7 +136,11 @@ const LogoTab = () => {
                 step="0.01"
                 value={sliderXValue}
                 onChange={handleSliderXChange}
-                />
+            />
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
+                onClick={() => {handleXIncrement(0.01)}}
+            >+</button>     
             <br/>
 
 
@@ -91,6 +148,10 @@ const LogoTab = () => {
             <label htmlFor="sliderY">
                 Y:
             </label>
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
+                onClick={() => {handleYDecrement(0.01)}}
+            >-</button>
             <input
                 type="range"
                 className="slider"
@@ -100,12 +161,20 @@ const LogoTab = () => {
                 value={sliderYValue}
                 onChange={handleSliderYChange}
                 />
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
+                onClick={() => {handleYIncrement(0.01)}}
+            >+</button>                
             <br/>
 
             {/* Z testing side sleeve */}
             <label htmlFor="sliderY">
                 Z:
             </label>
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
+                onClick={() => {handleZDecrement(0.01)}}
+            >-</button>
             <input
                 type="range"
                 className="slider"
@@ -115,12 +184,22 @@ const LogoTab = () => {
                 value={sliderZValue}
                 onChange={handleSliderZChange}
                 />
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
+                onClick={() => {handleZIncrement(0.01)}}
+            >+</button>                
             <br/>
+            <hr/>
 
             {/* SCALE  */}
             <label htmlFor="scale">
-                SCALE:
+                Scale:
             </label>
+            <br/>
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
+                onClick={() => {handleScaleDecrement(0.01)}}
+            >-</button>
             <input
                 type="range"
                 className="scale"
@@ -130,12 +209,20 @@ const LogoTab = () => {
                 value={sliderScale}
                 onChange={handleSliderScale}
                 />
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
+                onClick={() => {handleScaleIncrement(0.01)}}
+            >+</button>
             <br/>
 
             {/* Rotation  */}
             <label htmlFor="scale">
                 Rotate:
-            </label>
+            </label><br/>
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
+                onClick={() => {handleRotateDecrement(0.1)}}
+            >-</button>
             <input
                 type="range"
                 className="scale"
@@ -144,7 +231,11 @@ const LogoTab = () => {
                 step="0.1"
                 value={sliderRotate}
                 onChange={handleRotate}
-                />
+            />
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
+                onClick={() => {handleRotateIncrement(0.1)}}
+            >+</button>     
             <br/>
             <br/>
 

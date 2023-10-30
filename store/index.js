@@ -12,7 +12,7 @@ const state = proxy({
     // front center = logoDecal
     logoDecal:'./utl.png',
     // front logo on chest = fullDecal
-    fullDecal:'./threejs.png',
+    fullDecal:'./utl.png',
     backDecal:'./utl.png',
     sideDecal:'./threejs.png',
     shirtMat:'./texture5Cloth2.jpg',
@@ -27,6 +27,8 @@ const state = proxy({
     backScale:0.15,
     backRotate:[0,0,0],
     view:[0, 0, 0],
+    isMale:false,
+    femLogoDecalPos:[0,0.04, 0.15],
     
     
 

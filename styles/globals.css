@@ -56,7 +56,7 @@ html {
 }
 
 .rightlogo-container {
-  @apply absolute right-20 ml-3 glassmorphism p-1 w-[195px] h-[280px] flex flex-col rounded-md;
+  @apply absolute right-20 ml-3 glassmorphism p-1 w-[225px] h-[280px] flex flex-col rounded-md;
 
 }
 
