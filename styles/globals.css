@@ -60,6 +60,11 @@ html {
 
 }
 
+.zoom-container {
+  @apply absolute right-20 ml-3 glassmorphism p-1 w-[225px] h-[80px] flex flex-col rounded-md;
+
+}
+
 .filepicker-label {
   @apply border border-gray-300 py-1.5 px-2 rounded-md shadow-sm text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
 }

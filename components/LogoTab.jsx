@@ -113,7 +113,7 @@ const LogoTab = () => {
 
         // update rotation
         state.logoRotate[2] = 0;
-    }
+    }   
 
   return (
     <div className="rightlogo-container flex flex-col order-first">
@@ -215,7 +215,7 @@ const LogoTab = () => {
             >+</button>
             <br/>
 
-            {/* Rotation  */}
+            {/* Rotate  */}
             <label htmlFor="scale">
                 Rotate:
             </label><br/>
@@ -226,8 +226,8 @@ const LogoTab = () => {
             <input
                 type="range"
                 className="scale"
-                min="-1.7"
-                max="1.7"
+                min="0.2"
+                max="2"
                 step="0.1"
                 value={sliderRotate}
                 onChange={handleRotate}
@@ -237,6 +237,7 @@ const LogoTab = () => {
                 onClick={() => {handleRotateIncrement(0.1)}}
             >+</button>     
             <br/>
+
             <br/>
 
 

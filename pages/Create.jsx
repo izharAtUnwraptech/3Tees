@@ -12,6 +12,7 @@ import RightTab from '@components/RightTab';
 import LogoTab from '@components/LogoTab';
 import FullTab from '@components/FullTab';
 import BackTab from '@components/BackTab';
+import ZoomTab from '@components/ZoomTab';
 
 const Create = () => {
 
@@ -41,6 +42,8 @@ const Create = () => {
           return <FullTab />
         case "backShirt":
           return <BackTab />
+        case "zoom":
+          return <ZoomTab />  
         default:
           return null;     
       }
@@ -116,6 +119,9 @@ const Create = () => {
         })
     }
 
+
+
+    // set gender to render on selection
     const gender = snap.isMale ? "Female" : "Male";
 
 
@@ -167,8 +173,13 @@ const Create = () => {
 
                 ))}
 
+                {/* Zoom butt  */}
+                <div title="Zoom" onClick={() => setActiveRightTab('zoom')} className="w-3/4 h-3/4">
+                  <img src="/assets/zoomButt.png" alt="Zoom" />
+                </div>
+
                 {/* cancel butt  */}
-                <div onClick={() => setActiveRightTab(null)} className="w-3/4 h-3/4">
+                <div title="Close Filters"  onClick={() => setActiveRightTab(null)} className="w-3/4 h-3/4">
                   <img src="/assets/cancel.png" alt="Cancel" />
                 </div>
 
