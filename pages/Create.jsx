@@ -250,6 +250,23 @@ const Create = () => {
 
           </motion.div>
 
+
+          {/* Download button */}
+          <motion.div 
+          className="absolute z-10 top-5 right-72"
+          {...fadeAnimation}
+          >
+          
+            <CustomButton 
+              type="filled"
+              title={'Download'}
+              handleClick={ () => {
+                state.toDownload = true;
+              }}
+            />
+          
+          </motion.div>
+
           {/* bottom nav */}
           <motion.div
             className="filtertabs-container w-full"

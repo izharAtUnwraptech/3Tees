@@ -29,6 +29,8 @@ const state = proxy({
     view:[0, 0, 0],
     isMale:false,
     femLogoDecalPos:[0,0.04, 0.15],
+    toDownload:false,
+    downloadInProgress:false,
     
     
 
