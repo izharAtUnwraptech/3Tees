@@ -103,41 +103,45 @@ const Backview = () => {
           </motion.div>  
 
 
+{/* Top Nav */}
+          <div className="flex justify-center gap-3 md:gap-5 m-2 absolute top-15 z-10 right-0 left-0 p-2 w-full items-center flex-wrap">
+            
+            {/* intro button */}
+            <motion.div 
+            className=""
+            {...fadeAnimation}
+            >
+              <CustomButton 
+                type="filled"
+                title="Go Back"
+                handleClick={ () => {
+                  state.intro = true;
+                  state.back = false;
+                  state.view = [0,0,0];
+                }}
+              />
 
-          {/* intro button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-24"
-          {...fadeAnimation}
-          >
-            <CustomButton 
-              type="filled"
-              title="Go Back"
-              handleClick={ () => {
-                state.intro = true;
-                state.back = false;
-                state.view = [0,0,0];
-              }}
-            />
+            </motion.div>
 
-          </motion.div>
+            {/* back button */}
+            <motion.div 
+            className=""
+            {...fadeAnimation}
+            >
+              <CustomButton 
+                type="filled"
+                title="Front"
+                handleClick={ () => {
+                  state.back = false;
+                  state.front = true;
+                  state.view = [0,0,0];
+                }
+                }
+              />
 
-          {/* back button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-5"
-          {...fadeAnimation}
-          >
-            <CustomButton 
-              type="filled"
-              title="Front"
-              handleClick={ () => {
-                state.back = false;
-                state.front = true;
-                state.view = [0,0,0];
-              }
-              }
-            />
+            </motion.div>
+          </div>
 
-          </motion.div>
 
           {/* bottom nav */}
           <motion.div

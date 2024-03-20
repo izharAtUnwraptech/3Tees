@@ -1,6 +1,7 @@
 "use client";
 
 import CustomButton from '@components/CustomButton';
+import Nav from '@components/promptopia/Nav';
 import { headContainerAnimation, 
         headContentAnimation, 
         headTextAnimation, 
@@ -17,18 +18,16 @@ const Intro = () => {
     return (
 
       <AnimatePresence>
+        {/* <Nav/> */}
           {snap.intro && (
             
               <motion.section className="home" {...slideAnimation('left')}>
+
+                
                   <motion.header {...slideAnimation('down')}>
-                     
-                       <img 
-                      src='./threejs.png'
-                      alt='logo'
-                      className="w-8 h-8 object-contain"
-                      />
-                     
+                  
                   </motion.header>
+
                   <motion.div className="home-content" {...headContainerAnimation}>
                       <motion.div {...headTextAnimation}>
                           <h1 className="head-text">
@@ -63,6 +62,7 @@ const Intro = () => {
                               state.back = false;
                               state.intro = false;
                               state.front = true;
+                              state.create = true;
                             }}
                            customStyles="w-fit px-4 py-2.5 my-2 font-bold text-sm"
                            />  

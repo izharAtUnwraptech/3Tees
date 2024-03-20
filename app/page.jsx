@@ -1,6 +1,8 @@
 "use client";
 
 import CanvasModel from "@canvas"
+import Details from "@components/Details";
+import CreateTopNav from "@components/promptopia/CreateTopNav";
 import Backview from "@pages/Backview";
 import Create from "@pages/Create";
 import Intro from "@pages/intro"
@@ -22,6 +24,7 @@ const Home = () => {
 
     <div className="h-screen">
       <CanvasModel />
+      {snap.create && <Details/>}     
     </div>
     </>
   )

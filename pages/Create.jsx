@@ -13,6 +13,7 @@ import LogoTab from '@components/LogoTab';
 import FullTab from '@components/FullTab';
 import BackTab from '@components/BackTab';
 import ZoomTab from '@components/ZoomTab';
+import CreateTopNav from '@components/promptopia/CreateTopNav';
 
 const Create = () => {
 
@@ -26,7 +27,7 @@ const Create = () => {
   const [activeFilterTab, setActiveFilterTab] = useState({
     // change these based on our 3 logo designs
     logoShirt: true,
-    stylishShirt: false,
+    stylishShirt: true,
     backShirt: true,
   })
   const [activeRightTab, setActiveRightTab] = useState("");
@@ -101,6 +102,7 @@ const Create = () => {
 
       // after setting state , set the activeFilterTab
       setActiveFilterTab((prevState) => {
+        console.log(prevState);
         return {
           ...prevState,
           [tabName]: !prevState[tabName],
@@ -121,15 +123,17 @@ const Create = () => {
 
 
 
-    // set gender to render on selection
-    const gender = snap.isMale ? "Female" : "Male";
-
 
   return (
     <AnimatePresence>
 
       {snap.front && (
         <>
+
+           {/*  if required instead of rendering at top nav, place it below canvas by placing this component in app/page.jsx*/}
+            {/* this is top nav */}
+            <CreateTopNav/>
+
           {/* left nav */}
           <motion.div
            key="custom"
@@ -191,81 +195,10 @@ const Create = () => {
             </div>
           </motion.div>
 
-          {/* intro button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-24"
-          {...fadeAnimation}
-          >
-            <CustomButton 
-              type="filled"
-              title="Go Back"
-              handleClick={ () => {
-                state.intro = true;
-                state.front = false;
-                
-              }}
-            />
 
-          </motion.div>
-
-          {/* back button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-5"
-          {...fadeAnimation}
-          >
-            <CustomButton 
-              type="filled"
-              title="Rotate"
-              handleClick={ () => {
-                state.back = true;
-                state.front = false;
-                state.view = [0,Math.PI,0];
-              }
-              }
-            />
-
-          </motion.div>
-
-          {/* Gender button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-48"
-          {...fadeAnimation}
-          >
-            {snap.isMale ? 
-            <CustomButton 
-              type="filled"
-              title={gender}
-              handleClick={ () => {
-                state.isMale = false;
-              }}
-            />
-          : <CustomButton 
-              type="filled"
-              title={gender}
-              handleClick={ () => {
-                state.isMale = true;
-              }}
-            />  
-          }
-
-          </motion.div>
-
-
-          {/* Download button */}
-          <motion.div 
-          className="absolute z-10 top-5 right-72"
-          {...fadeAnimation}
-          >
+            {/* TOP NAV */}
           
-            <CustomButton 
-              type="filled"
-              title={'Download'}
-              handleClick={ () => {
-                state.toDownload = true;
-              }}
-            />
-          
-          </motion.div>
+                  
 
           {/* bottom nav */}
           <motion.div
@@ -285,6 +218,10 @@ const Create = () => {
             ))}
 
           </motion.div>
+
+                       
+
+          
         </>
       )}
 

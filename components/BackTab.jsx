@@ -1,5 +1,5 @@
 import state from "@store"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio"
 import CustomButton from "./CustomButton";
 
@@ -8,109 +8,117 @@ const BackTab = () => {
     
     const snap = useSnapshot(state);
 
-    // Position X slider
     const [sliderXValue, setSliderXValue] = useState(snap.backDecalPos[0]);
+    const [sliderYValue, setSliderYValue] = useState(snap.backDecalPos[1]);
+    const [sliderZValue, setSliderZValue] = useState(snap.backDecalPos[2]);
+    const [sliderBackScale, setSliderBackScale] = useState(snap.backScale);
+    const [sliderRotate, setSliderRotate] = useState(snap.backRotate[2]);
+
+
+    useEffect(() => {
+        state.backDecalPos = [sliderXValue, sliderYValue, sliderZValue];
+    
+    }, [sliderXValue, sliderYValue, sliderZValue]);
+
+    useEffect(() => {
+        state.backScale = sliderBackScale;
+
+    },[sliderBackScale])
+
+    useEffect(() => {
+        state.backRotate[2] = sliderRotate;
+    }, [sliderRotate]);
+
+
+    // Positioning
 
     const handleSliderXChange = (e) => {
-        setSliderXValue(parseFloat(e.target.value));
-        state.backDecalPos[0] = sliderXValue;
+        const value = parseFloat(e.target.value);
+        setSliderXValue(value);
     };
-
-    const handleXIncrement = (step) => {
-        setSliderXValue(sliderXValue+step);
-        state.backDecalPos[0] = sliderXValue;
-
-    }
-
-    const handleXDecrement = (step) => {
-        setSliderXValue(sliderXValue-step);
-        state.backDecalPos[0] = sliderXValue;
-    }
-
-
-    // Position Y slider
-    const [sliderYValue, setSliderYValue] = useState(snap.backDecalPos[1]);
 
     const handleSliderYChange = (e) => {
-        setSliderYValue(parseFloat(e.target.value));
-        state.backDecalPos[1] = sliderYValue;
+        const value = parseFloat(e.target.value);
+        setSliderYValue(value);
     };
-
-    const handleYIncrement = (step) => {
-        setSliderYValue(sliderYValue+step);
-        state.backDecalPos[1] = sliderYValue;
-
-    }
-
-    const handleYDecrement = (step) => {
-        setSliderYValue(sliderYValue-step);
-        state.backDecalPos[1] = sliderYValue;
-    }
-
-    // Position Z slider
-    const [sliderZValue, setSliderZValue] = useState(snap.backDecalPos[2]);
 
     const handleSliderZChange = (e) => {
-        setSliderZValue(parseFloat(e.target.value));
-        state.backDecalPos[2] = sliderZValue;
+        const value = parseFloat(e.target.value);
+        setSliderZValue(value);
     };
 
-    const handleZIncrement = (step) => {
-        setSliderZValue(sliderZValue+step);
-        state.backDecalPos[2] = sliderZValue;
-    }
+    const handleIncrement = (axis, step) => {
+        switch (axis) {
+            case 'x':
+                setSliderXValue(prevValue => prevValue + step);
+                break;
+            case 'y':
+                setSliderYValue(prevValue => prevValue + step);
+                break;
+            case 'z':
+                setSliderZValue(prevValue => prevValue + step);
+                break;
+            default:
+                break;
+        }
+    };
 
-    const handleZDecrement = (step) => {
-        setSliderZValue(sliderZValue-step);
-        state.backDecalPos[2] = sliderZValue;
-    }
+    const handleDecrement = (axis, step) => {
+        switch (axis) {
+            case 'x':
+                setSliderXValue(prevValue => prevValue - step);
+                break;
+            case 'y':
+                setSliderYValue(prevValue => prevValue - step);
+                break;
+            case 'z':
+                setSliderZValue(prevValue => prevValue - step);
+                break;
+            default:
+                break;
+        }
+    };
 
     // Scale
-    const [sliderScale, setSliderScale] = useState(snap.backScale);
-
-    const handleSliderScale = (e) => {
-        setSliderScale(parseFloat(e.target.value));
-        state.backScale = sliderScale;
+    const handleLogoScaleChange = (e) => {
+        const value = parseFloat(e.target.value);
+        setSliderBackScale(value);
     };
 
     const handleScaleIncrement = (step) => {
-        setSliderScale(sliderScale+step);
-        state.backScale = sliderScale;
-    }
+        setSliderBackScale(prevScale => prevScale + step);
+    };
 
     const handleScaleDecrement = (step) => {
-        setSliderScale(sliderScale-step);
-        state.backScale = sliderScale;
-    }
+        setSliderBackScale(prevScale => prevScale - step);
+    };
 
     // Rotate
-    const [sliderRotate, setSliderRotate] = useState(0);
-
     const handleRotate = (e) => {
-        setSliderRotate(parseFloat(e.target.value));
-        state.backRotate[2] = sliderRotate;
+        const value = parseFloat(e.target.value);
+        setSliderRotate(value);
     };
 
     const handleRotateIncrement = (step) => {
-        setSliderRotate(sliderRotate+step);
-        state.backRotate[2] = sliderRotate;
-    }
+        setSliderRotate(prevRotate => prevRotate + step);
+    };
 
     const handleRotateDecrement = (step) => {
-        setSliderRotate(sliderRotate-step);
-        state.backRotate[2] = sliderRotate;
-    }
+        setSliderRotate(prevRotate => prevRotate - step);
+    };
 
     // setDefault
     const setDefaultVals = () => {
-        // update positions
-        state.backDecalPos = [0,0.15, -0.1];
-
-        // update scale
-        state.backScale = 0.15;
-
-        // update rotation
-        state.backRotate[2] = 0;
+          // update positions
+          setSliderXValue(0);
+          setSliderYValue(0.15);
+          setSliderZValue(-0.1);
+  
+          // update scale
+          setSliderBackScale(0.15);
+  
+          // update rotation
+          setSliderRotate(0);
     }
 
 
@@ -128,7 +136,7 @@ const BackTab = () => {
             </label>
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
-                onClick={() => {handleXDecrement(0.01)}}
+                onClick={() => {handleDecrement('x',0.01)}}
             >-</button>
             <input
                 type="range"
@@ -141,7 +149,7 @@ const BackTab = () => {
                 />
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
-                onClick={() => {handleXIncrement(0.01)}}
+                onClick={() => {handleIncrement('x',0.01)}}
             >+</button>
             <br/>
 
@@ -152,7 +160,7 @@ const BackTab = () => {
             </label>
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
-                onClick={() => {handleYDecrement(0.01)}}
+                onClick={() => {handleDecrement('y',0.01)}}
             >-</button>
             <input
                 type="range"
@@ -165,7 +173,7 @@ const BackTab = () => {
             />
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
-                onClick={() => {handleYIncrement(0.01)}}
+                onClick={() => {handleIncrement('y',0.01)}}
             >+</button> 
             <br/>
 
@@ -175,7 +183,7 @@ const BackTab = () => {
             </label>
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-1 mx-1 rounded"
-                onClick={() => {handleZDecrement(0.01)}}
+                onClick={() => {handleDecrement('z',0.01)}}
             >-</button>
             <input
                 type="range"
@@ -188,7 +196,7 @@ const BackTab = () => {
                 />
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"
-                onClick={() => {handleZIncrement(0.01)}}
+                onClick={() => {handleIncrement('z',0.01)}}
             >+</button> 
             <br/>
             <hr/>
@@ -207,8 +215,8 @@ const BackTab = () => {
                 min="0.02"
                 max="0.45"
                 step="0.01"
-                value={sliderScale}
-                onChange={handleSliderScale}
+                value={sliderBackScale}
+                onChange={handleLogoScaleChange}
                 />
             <button 
                 className="bg-blue-500 hover:bg-blue-700 text-white px-1 mx-1 mb-2 font-bold rounded"

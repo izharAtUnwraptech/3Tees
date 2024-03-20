@@ -12,12 +12,13 @@ const Shirt = () => {
   
     const snap = useSnapshot(state);
     const {nodes,materials} = useGLTF('/shirt_baked.glb')
+    // return ( console.log(nodes));
 
     const logoTexture = useTexture(snap.logoDecal)
     const fullTexture = useTexture(snap.fullDecal)
     const backTexture = useTexture(snap.backDecal)
     const sideTexture = useTexture(snap.sideDecal)
-    const shirtTexture = useTexture(snap.shirtMat)
+    // const shirtTexture = useTexture(snap.shirtMat)
     // shirtTexture.repeat.set(5,5);
     
     
@@ -54,7 +55,7 @@ const Shirt = () => {
         metalness:0.2,
         transparent:false,
         side: DoubleSide,
-        map:shirtTexture, // set shirtTexture to any desired fabric
+        //map:shirtTexture, // set shirtTexture to any desired fabric
         
       });
         

@@ -41,6 +41,9 @@ const CustomButton = ({type, title, customStyles, handleClick}) => {
         border:'1px solid '+ getContrastColor(snap.color),
         color:getContrastColor(snap.color),
       }
+    } else if( type === 'dropdown'){
+      
+      return null;
     }
   }
 

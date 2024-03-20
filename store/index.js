@@ -2,11 +2,13 @@ import { proxy } from 'valtio';
 
 const state = proxy({
     intro:true,
+    create:false,
     front:false,
     back:false,
     color:'#2F2F2A',
     isLogoTexture:true,
-    isFullTexture:false,
+    // fullTecture - pocket Logo Texture
+    isFullTexture:true,
     isbackTexture:true,
     isSideTexture:false,
     // front center = logoDecal
@@ -15,7 +17,8 @@ const state = proxy({
     fullDecal:'./utl.png',
     backDecal:'./utl.png',
     sideDecal:'./threejs.png',
-    shirtMat:'./texture5Cloth2.jpg',
+    // shirtMat:'./texture5Cloth2.jpg',
+    shirtMat:'./texture2Mat.jpg',
     camPos:[-0.4, 0, 2],
     logoDecalPos:[0,0.04, 0.15],
     logoScale:0.25,
@@ -28,16 +31,18 @@ const state = proxy({
     backRotate:[0,0,0],
     view:[0, 0, 0],
     isMale:false,
+    isFemale:true,
+    isCollored:false,
+    isOversized:false,
     femLogoDecalPos:[0,0.04, 0.15],
     toDownload:false,
     downloadInProgress:false,
-    
+    isDropdownOpen:false,
+
+    // Pricing
+    finalPrice:0,
     
 
-
-
-    
-    
 
 });
 

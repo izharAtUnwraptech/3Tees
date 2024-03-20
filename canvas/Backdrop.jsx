@@ -1,9 +1,9 @@
 "use client";
 
 import { AccumulativeShadows, RandomizedLight } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+// import { useFrame } from "@react-three/fiber";
 import state from "@store";
-import { easing } from "maath";
+// import { easing } from "maath";
 import { useRef } from "react";
 import { useSnapshot } from "valtio";
 
@@ -16,7 +16,7 @@ const Backdrop = () => {
   const shadows= useRef();
   
   return (
-    
+                     
     <AccumulativeShadows
     ref={shadows}
     temporal
