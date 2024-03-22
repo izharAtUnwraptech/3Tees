@@ -1,6 +1,9 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import state from '@store';
+import { signIn, signOut, useSession, getProviders } from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
 const Details = () => {
     const snap = useSnapshot(state);
@@ -11,6 +14,7 @@ const Details = () => {
     let [BackLogoPrice, setBackLogoPrice] = useState(120);
     let [printPrice, setPrintPrice] = useState(0);
     let [totalPrice, setTotalPrice] = useState(0);
+    const [sizePrice, setSizePrice] = useState(0);
 
     // useEffect(() => {
     //     alert("logo changed");
@@ -18,6 +22,19 @@ const Details = () => {
                   
     // // Scale useEffect
     useEffect(() => {
+
+        // set prices fro size double from what expected , this will render half of the price in front end, this is done due to some calculation issues
+        const sizePrices = {
+            XS: 40,
+            S: 80,
+            M: 120,
+            L: 160,
+            XL: 200,
+        };
+
+        // Calculate size-based additional price
+        const additionalSizePrice = sizePrices[snap.size] || 0;
+
 
         // alert(snap.isLogoTexture);
         let calculatedShirtPrice = 0;
@@ -34,6 +51,9 @@ const Details = () => {
         if(snap.isOversized){
             calculatedShirtPrice = 950;
         }
+
+        // Add size-based additional price to the calculated shirt price
+        calculatedShirtPrice += additionalSizePrice;
 
         // Calculate offer price
         const calculatedOfferPrice = calculatedShirtPrice * 0.5;
@@ -67,7 +87,7 @@ const Details = () => {
         };
 
         calculatePrices();
-    }, [snap.logoScale, snap.fullScale, snap.backScale, snap.isLogoTexture, snap.isFullTexture, snap.isbackTexture, snap.isMale, snap.isFemale, snap.isCollored, snap.isOversized]);
+    }, [snap.size, snap.logoScale, snap.fullScale, snap.backScale, snap.isLogoTexture, snap.isFullTexture, snap.isbackTexture, snap.isMale, snap.isFemale, snap.isCollored, snap.isOversized]);
 
     useEffect(() => {
         // Calculate total price when any of the dependent states change
@@ -115,6 +135,130 @@ const Details = () => {
         return logoPrice;
     }
 
+
+    // ADD TO CART :::::::::::::
+
+    // Add To Cart Vars
+    const {data: session} = useSession();
+    const [providers, setProviders] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const [startDownload, setStartDownload] = useState(false);
+
+    const router = useRouter();
+
+    useEffect(() => {
+
+        const setUpProviders = async () => {
+            const response = await getProviders();
+            
+            setProviders(response)
+        }
+
+        setUpProviders();
+
+    }, [])
+
+    // add to cart function
+
+    const getProductName = () => {
+        if (snap.isMale) {
+          return "Men's T-shirt";
+        } else if (snap.isFemale) {
+          return "Women's T-shirt";
+        } else if (snap.isCollored) {
+          return "Collored T-shirt";
+        } else if (snap.isOversized) {
+          return "Oversized T-shirt";
+        }
+        // Default product name if none of the conditions match
+        return 'Generic T-shirt';
+      };
+
+
+    useEffect(() => {
+    // Ensure that snap.frontImage is not null or undefined before proceeding
+        if (snap.frontImage && snap.backImage) {
+            // Proceed with sending data to the API
+            callToPostApi();
+        }
+    }, [snap.backImage]);
+
+
+    // Function to send data to the API
+    const callToPostApi = async () => {
+
+        const productName = getProductName(snap);
+        const quantity = '4'; 
+        
+
+        try {
+
+            const maxshirtPrice = printPrice + shirtPrice;
+            alert(maxshirtPrice);
+
+        const response = await fetch('/api/cart/', {
+            method: 'POST',
+            body: JSON.stringify({
+            userid: session.user.id,
+            frontimage: snap.frontImage,
+            backimage: snap.backImage,
+            logoimage: snap.logoDecal,
+            pocketlogoimage: snap.fullDecal,
+            backlogoimage: snap.backDecal,
+            productname: productName,
+            quantity: quantity,
+            size: snap.size,
+            totalPrice: totalPrice,
+            shirtPrice: maxshirtPrice,
+            color:snap.color,
+            isFrontLogo:snap.isLogoTexture, 
+            isPocketLogo:snap.isFullTexture,
+            isBackLogo:snap.isbackTexture,
+
+            })
+        });
+
+        if (response.ok) {
+            router.push('/');
+            
+
+        } else {
+            alert('Product Not Saved');
+        }
+        } catch (error) {
+        console.error("Error Uploading Product: ", error);
+        }
+
+    }
+
+
+    const addToCart = async () => {
+
+        state.toDownload = true;
+        
+    };
+
+
+    // check session
+    const checkSession = () => {
+
+        if (!session) {
+        setShowPopup(true);
+        
+        } else {
+        // Add to cart logic here
+
+        addToCart();
+
+        }
+    }
+
+    // Set Size ::::::::::
+    const handleSizeChange = (size) => {
+        // Update the state with the selected size
+        state.size = size;
+      };
+
     
 
     return (
@@ -140,20 +284,70 @@ const Details = () => {
                 <div className="flex items-center mb-4">
                     <span className="mr-2">Select Size:</span>
                     <div className="flex">
-                        <button className="border rounded-full px-4 py-2 mr-2">XS</button>
-                        <button className="border rounded-full px-4 py-2 mr-2">S</button>
-                        <button className="border rounded-full px-4 py-2 mr-2">M</button>
-                        <button className="border rounded-full px-4 py-2 mr-2">L</button>
-                        <button className="border rounded-full px-4 py-2 mr-2">XL</button>
+                        <button
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XS' ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleSizeChange('XS')}
+                        >
+                            XS
+                        </button>
+                        <button
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'S' ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleSizeChange('S')}
+                        >
+                            S
+                        </button>
+                        <button
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'M' ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleSizeChange('M')}
+                        >
+                            M
+                        </button>
+                        <button
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'L' ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleSizeChange('L')}
+                        >
+                            L
+                        </button>
+                        <button
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XL' ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleSizeChange('XL')}
+                        >
+                            XL
+                        </button>
                     </div>
                     <a href="#" className="text-blue-600 ml-4">Size Chart</a>
                 </div>
 
                 {/* Add to cart and wishlist buttons */}
                 <div className="flex">
-                    <button className="bg-black text-white px-6 py-3 rounded-lg mr-4">Add to Cart</button>
+                    <button className="bg-black text-white px-6 py-3 rounded-lg mr-4" onClick={checkSession}>Add to Cart</button>
                     <button className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg">Add to Wishlist</button>
                 </div>
+
+                {/* POP UP IF NOT SIGNED IN */}
+                {showPopup && (
+                    <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-12">
+                        <div className="bg-white rounded-lg flex flex-col">
+                            <button className="text-gray-600 px-2 py-1 rounded-full self-end font-bold" onClick={() => setShowPopup(false)}>x</button>
+                            <div className="px-4">
+                            <p className="text-center mb-4">Please sign in to continue.</p>
+                                <div className="flex justify-center mb-4">
+                                    {providers && 
+                                    Object.values(providers).map(provider => (
+                                        <button
+                                            key={provider.name}
+                                            onClick={() => signIn(provider.id)}
+                                            className="black_btn mx-2"
+                                        >
+                                            Sign In with {provider.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

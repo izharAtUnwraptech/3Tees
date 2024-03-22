@@ -14,7 +14,7 @@ const state = proxy({
     // front center = logoDecal
     logoDecal:'./utl.png',
     // front logo on chest = fullDecal
-    fullDecal:'./utl.png',
+    fullDecal:'./unwraptechLogo.png',
     backDecal:'./utl.png',
     sideDecal:'./threejs.png',
     // shirtMat:'./texture5Cloth2.jpg',
@@ -39,11 +39,16 @@ const state = proxy({
     downloadInProgress:false,
     isDropdownOpen:false,
 
+    // model Data
+    size:'M',
+    frontImage:"",
+    backImage:"",
+
+
     // Pricing
     finalPrice:0,
+
     
-
-
 });
 
 export default state; 

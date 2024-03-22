@@ -43,19 +43,15 @@ const CanvasModel = () => {
       group.current.rotation.set(0, 0, 0);
 
       setTimeout(function(){
+
+        const frontImageData = canvas.toDataURL();
+        state.frontImage = frontImageData;
+
+        state.back = true;
+        state.front = false;      
       
-        // code to download front canvas view
-      const dataUrl = canvas.toDataURL();
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = 'your_image.png';
-      a.click()
-
-      state.back = true;
-      state.front = false;
-
-
       }, 1000)
+
     
 
     }else{
@@ -72,14 +68,13 @@ const CanvasModel = () => {
       const canvas = canvasRef.current;
       if(canvas){
   
-        // code to download back canvas view
+        
         setTimeout(function(){
   
-            const dataUrlBack = canvas.toDataURL();
-            const aback = document.createElement('a');
-            aback.href = dataUrlBack;
-            aback.download = 'your_back.png';
-            aback.click()
+            state.backImage = canvas.toDataURL();
+
+            state.back = false;
+            state.front = true; 
 
             state.downloadInProgress = false;
   
@@ -92,7 +87,6 @@ const CanvasModel = () => {
       }
 
 
-    
   }
 
   const initiateDownload = () => {
