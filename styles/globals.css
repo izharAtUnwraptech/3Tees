@@ -162,3 +162,22 @@ input[type="file"] {
   display: none !important;
 }
 
+.canvas-container {
+  position: relative;
+  /* background-image: url('/HDRI/origBgGif.gif'); */
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  width: 100%;
+  height: 80%;  /* background-image: url('/HDRI/origBgGif.gif'); */
+  background-image: url('/HDRI/bgImages/46.jpg');       
+  background-size: cover;
+  background-position: center;
+}
+/* GOOD BG IMAGE: 4.jpg, 8.jpeg, bg.png , 46.jpg*/
+
+.createTopNavClass{
+  position: absolute;
+}

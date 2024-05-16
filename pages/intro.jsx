@@ -8,12 +8,62 @@ import { headContainerAnimation,
         slideAnimation } from '@config/motion';
 import state from '@store';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useSnapshot } from 'valtio';
+import { signIn, signOut, useSession, getProviders } from "next-auth/react"
+import { useRouter } from 'next/navigation';
+
 
 
 const Intro = () => {
 
+    const {data: session} = useSession();
+    const [providers, setProviders] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const router = useRouter();
+
     const snap = useSnapshot(state);
+
+    useEffect(() => {
+
+        const setUpProviders = async () => {
+            const response = await getProviders();
+            
+            setProviders(response)
+        }
+
+        setUpProviders();
+
+    }, [])
+
+    const handleSignIn = async (providerId) => {
+        try {
+            await signIn(providerId);
+            // Redirect to the desired page after successful sign-in
+
+        } catch (error) {
+            // Handle sign-in error
+            console.error('Sign-in error:', error);
+        }
+    };
+
+
+    // check session
+    const checkSession = () => {
+
+        if (!session) {
+            setShowPopup(true);
+        
+        } else {
+        //  go to create page
+
+        state.back = false;
+        state.intro = false;
+        state.front = true;
+        state.create = true;
+
+        }
+    }
 
     return (
 
@@ -55,7 +105,7 @@ const Intro = () => {
   
                           
   
-                           <CustomButton 
+                           {/* <CustomButton 
                            type="filled"
                            title="Customize It"
                            handleClick={() => {
@@ -65,12 +115,41 @@ const Intro = () => {
                               state.create = true;
                             }}
                            customStyles="w-fit px-4 py-2.5 my-2 font-bold text-sm"
-                           />  
+                           />   */}
+
+                <div className="flex">
+                    <button className="bg-black text-white px-6 py-3 rounded-lg mr-4" onClick={checkSession}>Customize</button>
+                </div>
                             
                       </motion.div>
                   </motion.div>
               </motion.section>
           )}
+
+          {/* POP UP IF NOT SIGNED IN */}
+          {showPopup && (
+                    <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-20">
+                        <div className="bg-white rounded-lg flex flex-col">
+                            <button className="text-gray-600 px-2 py-1 rounded-full self-end font-bold" onClick={() => setShowPopup(false)}>x</button>
+                            <div className="px-4">
+                            <p className="text-center mb-4">We don't want your work to be erased please sign in to store your dsigns and modification.</p>
+                                <div className="flex justify-center mb-4">
+                                    {providers && 
+                                    Object.values(providers).map(provider => (
+                                        <button
+                                            key={provider.name}
+                                            onClick={() => handleSignIn(provider.id)}
+                                            className="black_btn mx-2"
+                                        >
+                                            Sign In with {provider.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+            )}
       </AnimatePresence>
 
   

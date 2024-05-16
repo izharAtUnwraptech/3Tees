@@ -124,7 +124,7 @@ const CreateTopNav = () => {
     
     <>
     {/* <div className="flex justify-center gap-3 md:gap-5 m-2 top-15 z-10 right-0 left-0 p-2 w-full items-center flex-wrap"> */}
-    <div className="flex justify-center gap-3 md:gap-5 m-2 z-10 right-0 left-0 p-2 w-full items-center flex-wrap">
+    <div className="flex justify-center gap-3 md:gap-5 m-2 z-10 right-0 left-0 p-2 w-full items-center flex-wrap createTopNavClass">
             {/* intro button */}
             <motion.div 
             className=""
@@ -262,21 +262,7 @@ const CreateTopNav = () => {
 
 
             {/* Download button */}
-            <motion.div 
-            className=""
-            {...fadeAnimation}
-            >
             
-              <CustomButton 
-                type="filled"
-                title={'Download'}
-                handleClick={ () => {
-                  state.toDownload = true;
-                }}
-                customStyles="border-b"
-              />
-            
-            </motion.div>
           </div>
 
               </>

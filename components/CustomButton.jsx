@@ -33,13 +33,20 @@ const CustomButton = ({type, title, customStyles, handleClick}) => {
   const generateStyle = (type) => {
     if(type === 'filled'){
       return {
-        backgroundColor:snap.color,
-        color:getContrastColor(snap.color),
+        // backgroundColor:snap.color,
+        // color:getContrastColor(snap.color),
+
+        // cany colors
+        backgroundColor:'#c1cad6',
+        color:'aliceblue',
       }
     } else if( type === 'outline'){
       return{
-        border:'1px solid '+ getContrastColor(snap.color),
-        color:getContrastColor(snap.color),
+        // border:'1px solid '+ getContrastColor(snap.color),
+        // color:getContrastColor(snap.color),
+
+        border:'1px solid #c1cad6',
+        color:'#ffdadd',
       }
     } else if( type === 'dropdown'){
       

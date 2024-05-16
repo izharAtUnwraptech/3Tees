@@ -17,8 +17,8 @@ const FShirt = () => {
     const logoTexture = useTexture(snap.logoDecal)
     const fullTexture = useTexture(snap.fullDecal)
     const backTexture = useTexture(snap.backDecal)
-    const sideTexture = useTexture(snap.sideDecal)
-    // const shirtTexture = useTexture(snap.shirtMat)
+    // const sideTexture = useTexture(snap.sideDecal)
+    const shirtTexture = useTexture(snap.shirtMat)
     
      // flip start
     if (snap.back) {
@@ -53,7 +53,7 @@ const FShirt = () => {
         metalness:0.2,
         transparent:false,
         side: DoubleSide,
-        //map:shirtTexture, // set shirtTexture to any desired fabric
+        map:shirtTexture, // set shirtTexture to any desired fabric
         
       });
         

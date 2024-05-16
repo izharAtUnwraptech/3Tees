@@ -93,10 +93,8 @@ const CanvasModel = () => {
     if(!snap.downloadInProgress && snap.toDownload){
       state.downloadInProgress = true;
 
-      downloadFrontCanvas()
-      downloadBackCanvasMain()
-
-      state.toDownload = false;
+      downloadFrontCanvas();
+      downloadBackCanvasMain();
   
     }
   }
@@ -106,29 +104,33 @@ const CanvasModel = () => {
 
   return (
 
-      <Canvas
-      shadows
-      camera={{position:[0,0,5], rotation:[0,0,0], fov:35}}
-      gl={{preserveDrawingBuffer:true}}
-      className='w-full max-w-full h-full transition-all ease-in '
-      ref={canvasRef}
-      >
-        <ambientLight intensity={0.5}/>
-        <Environment preset="city" />
-        <CameraRig group={group} >
-          
-          <Center>
-            {/* <OrbitControls /> */}
-            {snap.isMale && <Shirt/>}
-            {snap.isFemale && <FShirt/>}
-            {snap.isCollored && <ColleredTshirt/>}
-            {snap.isOversized && <OverSizedMale/>}
-          </Center>
-          {/* move backdrop outside cameraRig */}
-          <Backdrop/>  
-        </CameraRig>
-        
-      </Canvas>
+      <div className="canvas-container">
+        <Canvas
+          shadows
+          camera={{position:[0,0,5], rotation:[0,0,0], fov:35}}
+          gl={{preserveDrawingBuffer:true}}
+          className='w-full max-w-full h-full transition-all ease-in canvas'
+          ref={canvasRef}
+          >
+            <ambientLight intensity={0.5}/>
+            <Environment preset="city" />
+            {/* <Environment files="./HDRI/10R.exr" background /> */}
+            <CameraRig group={group} >
+              
+              <Center>
+                {/* <OrbitControls /> */}
+                {snap.isMale && <Shirt/>}
+                {snap.isFemale && <FShirt/>}
+                {snap.isCollored && <ColleredTshirt/>}
+                {snap.isOversized && <OverSizedMale/>}
+              </Center>
+              {/* move backdrop outside cameraRig */}
+              <Backdrop/>  
+            </CameraRig>
+            
+        </Canvas>
+      </div>
+
       )
   }
   

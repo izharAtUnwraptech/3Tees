@@ -177,9 +177,10 @@ const Details = () => {
 
     useEffect(() => {
     // Ensure that snap.frontImage is not null or undefined before proceeding
-        if (snap.frontImage && snap.backImage) {
+        if (snap.frontImage && snap.backImage && snap.toDownload) {
             // Proceed with sending data to the API
             callToPostApi();
+            state.toDownload = false;
         }
     }, [snap.backImage]);
 
@@ -188,13 +189,13 @@ const Details = () => {
     const callToPostApi = async () => {
 
         const productName = getProductName(snap);
-        const quantity = '4'; 
+        const quantity = 1; 
         
 
         try {
 
             const maxshirtPrice = printPrice + shirtPrice;
-            alert(maxshirtPrice);
+            // alert(maxshirtPrice);
 
         const response = await fetch('/api/cart/', {
             method: 'POST',
@@ -220,6 +221,8 @@ const Details = () => {
 
         if (response.ok) {
             router.push('/');
+            // router.push('/cart');
+            // alert(snap.toDownload);
             
 
         } else {
@@ -285,31 +288,31 @@ const Details = () => {
                     <span className="mr-2">Select Size:</span>
                     <div className="flex">
                         <button
-                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XS' ? 'bg-blue-500 text-white' : ''}`}
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XS' ? 'bg-red-300 text-white' : ''}`}
                             onClick={() => handleSizeChange('XS')}
                         >
                             XS
                         </button>
                         <button
-                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'S' ? 'bg-blue-500 text-white' : ''}`}
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'S' ? 'bg-red-300 text-white' : ''}`}
                             onClick={() => handleSizeChange('S')}
                         >
                             S
                         </button>
                         <button
-                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'M' ? 'bg-blue-500 text-white' : ''}`}
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'M' ? 'bg-red-300 text-white' : ''}`}
                             onClick={() => handleSizeChange('M')}
                         >
                             M
                         </button>
                         <button
-                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'L' ? 'bg-blue-500 text-white' : ''}`}
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'L' ? 'bg-red-300 text-white' : ''}`}
                             onClick={() => handleSizeChange('L')}
                         >
                             L
                         </button>
                         <button
-                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XL' ? 'bg-blue-500 text-white' : ''}`}
+                            className={`border rounded-full px-4 py-2 mr-2 ${snap.size === 'XL' ? 'bg-red-300 text-white' : ''}`}
                             onClick={() => handleSizeChange('XL')}
                         >
                             XL
@@ -320,8 +323,8 @@ const Details = () => {
 
                 {/* Add to cart and wishlist buttons */}
                 <div className="flex">
-                    <button className="bg-black text-white px-6 py-3 rounded-lg mr-4" onClick={checkSession}>Add to Cart</button>
-                    <button className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg">Add to Wishlist</button>
+                    <button className="bg-black text-white px-6 py-3 rounded-lg mr-4" onClick={checkSession} style={{ backgroundColor: "#c1cad6",color:"white"}}>Add to Cart</button>
+                    <button className="text-gray-700 px-6 py-3 rounded-lg" style={{border:'1px solid #c1cad6',color:"#c1cad6"}}>Add to Wishlist</button>
                 </div>
 
                 {/* POP UP IF NOT SIGNED IN */}
@@ -330,7 +333,7 @@ const Details = () => {
                         <div className="bg-white rounded-lg flex flex-col">
                             <button className="text-gray-600 px-2 py-1 rounded-full self-end font-bold" onClick={() => setShowPopup(false)}>x</button>
                             <div className="px-4">
-                            <p className="text-center mb-4">Please sign in to continue.</p>
+                            <p className="text-center mb-4">We don't want your work to be erased please sign in to store your dsigns and modification.</p>
                                 <div className="flex justify-center mb-4">
                                     {providers && 
                                     Object.values(providers).map(provider => (
