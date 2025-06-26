@@ -172,7 +172,7 @@ input[type="file"] {
 .canvas {
   width: 100%;
   height: 80%;  /* background-image: url('/HDRI/origBgGif.gif'); */
-  background-image: url('/HDRI/bgImages/46.jpg');       
+  background-image: url('/HDRI/bgImages/showroom.png');       
   background-size: cover;
   background-position: center;
 }

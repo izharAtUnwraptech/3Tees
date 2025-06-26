@@ -84,7 +84,7 @@ const Cart = () => {
 
     if(session?.user.id) fetchProducts();
 
-  }, [session]);
+  }, [session,products]);
 
   
   useEffect(() => {
@@ -160,6 +160,8 @@ const Cart = () => {
   };
 
   const handleDeleteProduct = async (productId) => {
+
+    
     setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
 
     try {
@@ -204,6 +206,35 @@ const Cart = () => {
     // Show the delete confirmation popup
     setShowProductEdit(false);
   };
+
+  const handleEditSave = async (pid,size,quantity) => {
+
+    try {
+      const response = await fetch('/api/cart/edit/', {
+        method: 'POST',
+        body: JSON.stringify({
+        pid: pid,
+        size: size,
+        quantity: quantity,
+        })
+    });
+
+    if (response.ok) {
+
+      const responseData = await response.json();
+      console.log(responseData.pid);
+      setShowProductEdit(false);
+      
+      
+    } else {
+        return console.log('Product Not Found');
+    }
+        
+    } catch (error) {
+      console.error('Error Deleting products by id:', error);
+    }
+
+  }
 
 
   // Edit functions ::::::::::::::: END
@@ -281,6 +312,9 @@ const Cart = () => {
 
           {/* If empty cart */}
           {products.length <= 0 && <h1>Products</h1>}
+          <h3>NOTES:</h3>
+          <p>1. Deleting Products are not as per ID, but the last product is deleted - CHECK WHY</p>
+          <p>2. Editing: Edit PRoducts are not being reflected properly, Make sure that after clicking `Done` in edit Modal, the products are updated</p>
           
           {/* If cart is not empty */}
           {products.map((product, productIndex) => (
@@ -357,7 +391,6 @@ const Cart = () => {
                                   <option value="L">L</option>
                                   <option value="XL">XL</option>
                               </select>
-
                           </div>
                           <div className="mb-4">
                               <label htmlFor="quantitySelect" className="mr-2">Quantity:</label>
@@ -369,7 +402,13 @@ const Cart = () => {
                           </div>
                           <hr />
                           <div className="flex justify-between mt-2">
-                              <button className="bg-indigo-500 text-white px-4 mx-2 py-2 rounded-md hover:bg-indigo-600" >Done</button>
+                              <button className="bg-indigo-500 text-white px-4 mx-2 py-2 rounded-md hover:bg-indigo-600" onClick={() => {
+
+                                const size = document.getElementById('sizeSelect').value;
+                                const quantity = document.getElementById('quantitySelect').value;
+                                handleEditSave(product.id,size,quantity);
+
+                                }}>Done</button>
                               <button className="bg-gray-300 text-gray-800 px-4 mx-2 py-2 rounded-md hover:bg-gray-400" onClick={() => {handleCancelEdit()}}>Close</button>
                           </div>
                       </div>

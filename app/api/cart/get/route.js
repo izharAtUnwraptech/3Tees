@@ -32,7 +32,7 @@ export const POST = async (req) => {
             products
         };
 
-        console.log(`Response Data: ${JSON.stringify(responseData.user)}`);
+        // console.log(`Response Data: ${JSON.stringify(responseData.user)}`);
 
         return new Response(JSON.stringify(responseData), {
             status:200

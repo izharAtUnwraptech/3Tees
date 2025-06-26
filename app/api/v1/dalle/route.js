@@ -19,15 +19,16 @@ export const POST = async (req, res) => {
             // response_format: 'base64_json'
           });
 
-          const image_url = image.data.data[0];
+        //   const image_url = image.data.data[0];
+          const image_url = image.data.data[0].url;
 
-          console.log('IMAGE URL' + image_url);
+        //   console.log('IMAGE URL' + image_url);
 
-        return new Response(JSON.stringify({ image:image_url }), { status: 201 });
+        // return new Response(JSON.stringify({ image:image_url }), { status: 201 });
 
-        // console.log(promptDesc);
+        console.log(promptDesc);
 
-        // return new Response(JSON.stringify(promptDesc), { status: 201 });
+        return new Response(JSON.stringify(promptDesc), { status: 201 });
 
     } catch (error) {
         console.log("Failed to Generate Image:", error);

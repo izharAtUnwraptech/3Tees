@@ -11,6 +11,8 @@ export const POST = async (req,{params}) => {
 
         await connectToDB();
 
+        console.log(productid);
+
         // Find user details
         const product = await UserProducts.findByIdAndRemove(productid);
         if (!product) {
@@ -23,7 +25,7 @@ export const POST = async (req,{params}) => {
             productid
         };
 
-        console.log(`Response Data: ${JSON.stringify(responseData.params)}`);
+        // console.log(`Response Data: ${JSON.stringify(responseData.params)}`);
 
         return new Response(JSON.stringify(responseData), {
             status:200

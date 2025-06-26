@@ -12,9 +12,9 @@ const state = proxy({
     isbackTexture:true,
     isSideTexture:false,
     // front center = logoDecal
-    logoDecal:'./utl.png',
+    logoDecal:'./unwraptechLogo.png', 
     // front logo on chest = fullDecal
-    fullDecal:'./unwraptechLogo.png',
+    fullDecal:'./utl.png',
     backDecal:'./utl.png',
     sideDecal:'./threejs.png',
     shirtMat:'./texture5Cloth2.jpg',

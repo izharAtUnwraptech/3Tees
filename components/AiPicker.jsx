@@ -32,8 +32,9 @@ const AiPicker = () => {
       if(response.ok){
         // state.logoDecal = `data:image/png;base64,${data.image}`;
         // state.logoDecal = '/unwrapLogoPng.png';
-        console.log(data);
-        alert("response recieved")
+        const responseData = await response.json();
+        console.log('Response received:', responseData);
+        alert("Image URL: " + responseData);
 
       }
 
